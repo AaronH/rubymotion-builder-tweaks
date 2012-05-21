@@ -5,7 +5,7 @@
 
 ##
 ## Include this file at the top of your RubyMotion project's Rakefile.
-##    include './rm_build.rake'
+##    include 'tasks/rm_build.rake'
 
 
 ## Point this to the location of your xcode project files.
@@ -15,8 +15,6 @@
 ## Path can be relative or absolute.
 XCODE_PROJECT_PATH  = %(xcode/**/)
 RESOURCES_PATH      = %(./resources/)
-
-
 
 ##### NIBS
 ## Tasks for dealing with .xib and internationalization files
