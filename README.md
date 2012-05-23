@@ -2,10 +2,6 @@
 ===========================
 Tweaks to enhance the building and compiling of Ruby Motion files.
 - - -
-### builder.rb
-**For RubyMotion 1.5**  
-This corrects a missing set of parentheses on line 290 of the file located in `/Library/RubyMotion/lib/motion/project`.
-- - -
 ### tasks/rm_build.rake
 
 This file includes a variety of methods to deal with managing XCode resources in a RubyMotion project. Add the `/tasks` directory to your project and include the file at the top of your Rakefile. By default, the XCode project resources are expected to be in an `/xcode/projectname` directory of your project.  This can be changed by modifying the `XCODE_PROJECT_PATH` of the `/tasks/rm_build.rake` file.
@@ -24,8 +20,8 @@ This file includes a variety of methods to deal with managing XCode resources in
 #### Rake Usage
 | nibs |  | 
 |:--------------------|---------------------------------------------------------------------------------|
-| `rake nibs:clean`   | Remove all \*.nib, \*.xib, \*.lproj files from the project's `/resources` directory |
-| `rake nibs:copy`    | Copy all \*.nib, \*.xib, \*.lproj files from the XCode project to `/resources`      |
+| `rake nibs:clean`   | Remove all \*.nib, \*.xib, \*.lproj, \*.storyboard, \*.storyboardc files from the project's `/resources` directory |
+| `rake nibs:copy`    | Copy all \*.nib, \*.xib, \*.lproj, \*.storyboard files from the XCode project to `/resources`      |
 | `rake nibs:update`  | Performs a `clean` and `copy` of all nibs files                                      |
 | `rake nibs` 		  | Convenience alias for `rake nibs:update`                                         |
 | **data** |  | 
@@ -39,6 +35,8 @@ This file includes a variety of methods to deal with managing XCode resources in
 
 - - -
 #### Change Log
+* Remove builder.rb fix for Motion version 1.5 since 1.6 fixes it.
+* Add support for Storyboard files in the nibs tasks.
 * Improved README.md
 * Added back builder.rb as the 1.5 release version has a typo in the section for building nibs.
 * Moved rake file into tasks subdirectory
