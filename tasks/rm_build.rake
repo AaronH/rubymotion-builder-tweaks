@@ -21,17 +21,17 @@ RESOURCES_PATH      = %(./resources/)
 ##
 namespace :nibs do
 
-  desc "Remove old .nib, .xib, and .lproj files from resources directory"
+  desc "Remove old .nib, .xib, .lproj, and .storyboard files from resources directory"
   task :clean do
-    clean_resource_files %w(*.xib *.nib *.lproj)
+    clean_resource_files %w(*.xib *.nib *.lproj *.storyboard *.storyboardc)
   end
 
   desc "Copy the .xib and .lproj files from selected XCode directory"
   task :copy do
-    copy_resource_files %w(*.xib *.lproj)
+    copy_resource_files %w(*.xib *.lproj *.storyboard)
   end
 
-  desc "Update all nibs and localization files"
+  desc "Update all nibs, storyboards, and localization files"
   task update: [:clean, :copy]
 
 end
