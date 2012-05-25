@@ -104,3 +104,16 @@ def copy_resource_files(*files)
     end
   end
 end
+
+##### CTags
+## via https://github.com/yury/CTags
+##
+desc "Generate ctags for sublime"
+task :tags do
+  config = App.config
+  files = config.bridgesupport_files + config.vendor_projects.map { |p| Dir.glob(File.join(p.path, '*.bridgesupport')) }.flatten
+  files += Dir.glob(config.project_dir + "/app/**/*").flatten
+  files += Dir.glob(config.project_dir + "/spec/**/*").flatten
+  tags_config = File.join(config.motiondir, 'data', 'bridgesupport-ctags.cfg')
+  sh "ctags --options=\"#{tags_config}\" -f .tags #{files.map { |x| '"' + x + '"' }.join(' ')}"
+end
