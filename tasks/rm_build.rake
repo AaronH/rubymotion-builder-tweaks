@@ -166,9 +166,18 @@ end
 
 # get an array of all possible resource files in the XCode path
 def xcode_resources(directory = XCODE_PROJECT_PATH, options = {})
-  extensions = options[:extensions] || RESOURCE_FILES_MAP.keys
-  Dir[*[*extensions].map{|t| File.join directory, %(*.#{t})}].map do |dir|
-    File.directory?(dir) ? xcode_resources(dir) : dir
+  extensions = [*(options[:extensions] || RESOURCE_FILES_MAP.keys)].flatten.map{|e| %(*.#{e})}
+  extensions += [*options[:files]] if options[:files]
+  directories = extensions.flatten.compact.uniq.map{|e| File.join directory, e}
+  Dir[*directories].map do |dir|
+    if File.directory?(dir)
+      find_options = {}
+      find_options[:files] = %w(* .xccurrentversion) if dir =~ /xcdatamodel/
+       xcode_resources dir, find_options
+    else
+      dir
+    end
+
   end.flatten.compact.uniq
 end
 
@@ -177,7 +186,7 @@ end
 # up with a better way to deal with subdirectories in case of future
 # RubyMotion updates
 def project_resource(path)
-  path = if match = path.match(/\/(([^\.\/]+\.lproj).+)/)
+  path = if match = path.match(/\/(([^\.\/]+\.(lproj|xcdatamodeld?)).+)/)
             match[1]
           end || File.basename(path)
   resource_path_for path
